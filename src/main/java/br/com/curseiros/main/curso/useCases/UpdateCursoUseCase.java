@@ -18,9 +18,9 @@ public class UpdateCursoUseCase {
 
         var result = cursoRepository.findById(id)
                 .map(curso -> {
-                    curso.setName(cursoUpdateDTO.name());
-                    curso.setCategory(cursoUpdateDTO.category());
-                    curso.setProfessor(cursoUpdateDTO.professor());
+                    if(cursoUpdateDTO.name() != null) curso.setName(cursoUpdateDTO.name());
+                    if(cursoUpdateDTO.category() != null) curso.setCategory(cursoUpdateDTO.category());
+                    if(cursoUpdateDTO.professor() != null) curso.setProfessor(cursoUpdateDTO.professor());
 
                     return cursoRepository.save(curso);
                 });
