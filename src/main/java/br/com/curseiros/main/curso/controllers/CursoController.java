@@ -1,5 +1,6 @@
 package br.com.curseiros.main.curso.controllers;
 
+import br.com.curseiros.main.curso.dto.CursoCreateDTO;
 import br.com.curseiros.main.curso.dto.CursoUpdateDTO;
 import br.com.curseiros.main.curso.entities.CursoEntity;
 import br.com.curseiros.main.curso.useCases.*;
@@ -45,10 +46,10 @@ public class CursoController {
             }),
             @ApiResponse(responseCode = "400", description = "Curso já cadastrado no sistema")
     })
-    public ResponseEntity<Object> create(@Valid @RequestBody CursoEntity curso) {
+    public ResponseEntity<Object> create(@Valid @RequestBody CursoCreateDTO cursoCreateDTO) {
         try {
 
-            var result = createCursoUseCase.execute(curso);
+            var result = createCursoUseCase.execute(cursoCreateDTO);
             return ResponseEntity.ok(result);
 
         } catch (Exception e) {
