@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: curseiros_db
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWD}
+      - POSTGRES_DB=${DB_NAME}
