@@ -1,8 +1,10 @@
 package br.com.curseiros.main.curso.controllers;
 
+import br.com.curseiros.main.curso.dto.CursoUpdateDTO;
 import br.com.curseiros.main.curso.entities.CursoEntity;
 import br.com.curseiros.main.curso.useCases.CreateCursoUseCase;
 import br.com.curseiros.main.curso.useCases.ListCursoUseCase;
+import br.com.curseiros.main.curso.useCases.UpdateCursoUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,9 @@ public class CursoController {
 
     @Autowired
     private ListCursoUseCase listCursoUseCase;
+
+    @Autowired
+    private UpdateCursoUseCase updateCursoUseCase;
 
     @PostMapping("/")
     public ResponseEntity<Object> create(@Valid @RequestBody CursoEntity curso) {
@@ -37,6 +42,16 @@ public class CursoController {
             var result = listCursoUseCase.execute();
             return ResponseEntity.ok(result);
 
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@RequestBody CursoUpdateDTO cursoUpdateDTO, @PathVariable Long id) {
+        try {
+            var result = updateCursoUseCase.execute(id, cursoUpdateDTO);
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
