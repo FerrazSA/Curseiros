@@ -1,5 +1,6 @@
 package br.com.curseiros.main.curso.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,12 +27,16 @@ public class CursoEntity {
     private Long id;
 
     @NotBlank
+    @Schema(example = "Curso de desenvolvimento em java iniciante", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
     @NotBlank
+    @Schema(example = "Programação", requiredMode = Schema.RequiredMode.REQUIRED)
     private String category;
     @NotBlank
+    @Schema(example = "Juvenal", requiredMode = Schema.RequiredMode.REQUIRED)
     private String professor;
 
+    @Schema(example = "true")
     private boolean active;
 
     @CreationTimestamp
