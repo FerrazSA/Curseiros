@@ -32,7 +32,7 @@ public class CursoEntity {
     @NotBlank
     private String professor;
 
-    private Boolean active;
+    private boolean active;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
