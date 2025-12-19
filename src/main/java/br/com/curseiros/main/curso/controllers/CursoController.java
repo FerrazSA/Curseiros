@@ -3,10 +3,12 @@ package br.com.curseiros.main.curso.controllers;
 import br.com.curseiros.main.curso.dto.CursoUpdateDTO;
 import br.com.curseiros.main.curso.entities.CursoEntity;
 import br.com.curseiros.main.curso.useCases.CreateCursoUseCase;
+import br.com.curseiros.main.curso.useCases.DeleteCursoUseCase;
 import br.com.curseiros.main.curso.useCases.ListCursoUseCase;
 import br.com.curseiros.main.curso.useCases.UpdateCursoUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,9 @@ public class CursoController {
     @Autowired
     private UpdateCursoUseCase updateCursoUseCase;
 
+    @Autowired
+    private DeleteCursoUseCase deleteCursoUseCase;
+
     @PostMapping("/")
     public ResponseEntity<Object> create(@Valid @RequestBody CursoEntity curso) {
         try {
@@ -31,7 +36,7 @@ public class CursoController {
             return ResponseEntity.ok(result);
 
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
         }
     }
 
@@ -54,6 +59,16 @@ public class CursoController {
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
+        try{
+            deleteCursoUseCase.execute(id);
+            return ResponseEntity.ok("Curso deletado com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
